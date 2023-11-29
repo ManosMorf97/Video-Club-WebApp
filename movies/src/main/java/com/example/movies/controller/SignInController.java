@@ -12,6 +12,18 @@ import java.util.Optional;
 @RestController
 public class SignInController {
 
+    private static String signed_email=null;
+
+    public static String getSigned_email() {
+        return signed_email;
+    }
+
+    public static void setSigned_email(String signed_email) {
+        SignInController.signed_email = signed_email;
+    }
+
+
+
     private DAO<User> dao;
 
     public SignInController(DAO<User> dao){
@@ -22,6 +34,7 @@ public class SignInController {
     public ResponseEntity<String> log_in(User user){
         Optional<User> logged_in=dao.get(user.getEmail(),user.getPassword());
         if (logged_in.isEmpty()){
+            signed_email= user.getEmail();
             return new ResponseEntity<>("Wrong username and/or password", HttpStatus.NOT_FOUND);
         }else{
             return new ResponseEntity<>("Welcome "+user.getEmail(), HttpStatus.OK);
