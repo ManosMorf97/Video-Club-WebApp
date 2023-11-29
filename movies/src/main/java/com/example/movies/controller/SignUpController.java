@@ -1,8 +1,9 @@
 package com.example.movies.controller;
 
 import com.example.movies.dao.DAO;
-import com.example.movies.dao.UsersJdbcDAO;
 import com.example.movies.model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,10 @@ public class SignUpController {
         this.dao=dao;
     }
 
-    @PostMapping("localhost:8080/SignUp")
-    public void insertNewUser(User user){
+    @PostMapping("/SignUp")
+    public ResponseEntity<String> insertNewUser(User user){
         dao.Create(user);
+        return new ResponseEntity<>("The user has created",HttpStatus.OK);
     }
+
 }

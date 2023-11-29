@@ -9,7 +9,7 @@ public interface DAO<T> {
 
     void Create(T t);
 
-    Optional<T> get(String email);
+    Optional<T> get(String email,String password);
 
     void update(T t,String password);
 

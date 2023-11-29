@@ -29,13 +29,13 @@ public class UsersJdbcDAO implements DAO<User>{
     }
     @Override
     public List<User> list() {
-        String sql="Select user from User";
+        String sql="Select user from Users";
         return jdbcTemplate.query(sql,rowMapper);
     }
 
     @Override
     public void Create(User user) {
-        String sql="Insert into User values(?,?)";
+        String sql="Insert into Users values(?,?)";
         int insert=jdbcTemplate.update(sql,user.getEmail(),user.getPassword());
         if (insert==1){
             log.info("New user added "+user.getEmail());
@@ -44,20 +44,20 @@ public class UsersJdbcDAO implements DAO<User>{
     }
 
     @Override
-    public Optional<User> get(String email) {
-        String sql="Select * from User where email=?";
+    public Optional<User> get(String email,String password) {
+        String sql="Select * from Users where email=? and password=?";
         User user=null;
         try{
-            user=jdbcTemplate.queryForObject(sql,rowMapper,email);
+            user=jdbcTemplate.queryForObject(sql,rowMapper,email,password);
         }catch(DataAccessException ex){
-            log.info("The user with email "+email+" does not exist");
+            log.info("Password or/and email are wrong");
         }
         return Optional.ofNullable(user);
     }
 
     @Override
     public void update(User user, String email) {
-        String sql="Update User set password=? where email=?";
+        String sql="Update Users set password=? where email=?";
         int update=jdbcTemplate.update(sql,user.getPassword(),email);
         if(update==1){
             log.info("Dear "+email+" your password has been changed");
@@ -66,7 +66,7 @@ public class UsersJdbcDAO implements DAO<User>{
 
     @Override
     public void delete(String email) {
-        String sql="Delete from User where email=?";
+        String sql="Delete from Users where email=?";
         int update=jdbcTemplate.update(sql,email);
         if (update==1){
             log.info("The user with email "+email+" has been deleted");
