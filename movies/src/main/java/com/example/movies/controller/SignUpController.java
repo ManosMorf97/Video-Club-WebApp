@@ -18,8 +18,10 @@ public class SignUpController {
 
     @PostMapping("/SignUp")
     public ResponseEntity<String> insertNewUser(User user){
-        dao.Create(user);
-        return new ResponseEntity<>("The user has created",HttpStatus.OK);
+        if(dao.Create(user))
+            return new ResponseEntity<>("The user has created",HttpStatus.OK);
+        else
+            return new ResponseEntity<>("That user already exists",HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

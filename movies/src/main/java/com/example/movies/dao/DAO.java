@@ -7,11 +7,14 @@ public interface DAO<T> {
 
     List<T> list();
 
-    void Create(T t);
+    boolean Create(T t);
 
-    Optional<T> get(String email,String password);
 
-    void update(T t,String password);
+    Optional<T> get(T t);
 
-    void delete(String id);
+    Optional<T> getUnique(T t);
+
+    void update(T t);
+
+    void delete(T t);
 }

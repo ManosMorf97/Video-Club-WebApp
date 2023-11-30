@@ -34,43 +34,47 @@ public class UsersJdbcDAO implements DAO<User>{
     }
 
     @Override
-    public void Create(User user) {
+    public boolean Create(User user) {
         String sql="Insert into Users values(?,?)";
         int insert=jdbcTemplate.update(sql,user.getEmail(),user.getPassword());
         if (insert==1){
             log.info("New user added "+user.getEmail());
+            return true;
         }
+        log.info("That user already exists");
+        return false;
 
     }
-
     @Override
-    public Optional<User> get(String email,String password) {
+    public Optional<User> get(User user) {
         String sql="Select * from Users where email=? and password=?";
-        User user=null;
         try{
-            user=jdbcTemplate.queryForObject(sql,rowMapper,email,password);
+            User user2=jdbcTemplate.queryForObject(sql,rowMapper,user.getEmail(),user.getPassword());
+            return Optional.ofNullable(user2);
         }catch(DataAccessException ex){
             log.info("Password or/and email are wrong");
         }
-        return Optional.ofNullable(user);
+        return null;
     }
 
     @Override
-    public void update(User user, String email) {
+    public Optional<User> getUnique(User user) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void update(User user) {
         String sql="Update Users set password=? where email=?";
-        int update=jdbcTemplate.update(sql,user.getPassword(),email);
+        int update=jdbcTemplate.update(sql,user.getPassword(),user.getEmail());
         if(update==1){
-            log.info("Dear "+email+" your password has been changed");
+            log.info("Dear "+user.getEmail()+" your password has been changed");
         }
     }
 
     @Override
-    public void delete(String email) {
+    public void delete(User user) {
         String sql="Delete from Users where email=?";
-        int update=jdbcTemplate.update(sql,email);
-        if (update==1){
-            log.info("The user with email "+email+" has been deleted");
-        }
+        int update=jdbcTemplate.update(sql,user.getEmail());
 
     }
 }

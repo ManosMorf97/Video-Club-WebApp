@@ -32,11 +32,11 @@ public class SignInController {
 
     @PostMapping("/SignIn")
     public ResponseEntity<String> log_in(User user){
-        Optional<User> logged_in=dao.get(user.getEmail(),user.getPassword());
-        if (logged_in.isEmpty()){
-            signed_email= user.getEmail();
+        Optional<User> logged_in=dao.get(new User(user.getEmail(),user.getPassword()));
+        if (logged_in==null){
             return new ResponseEntity<>("Wrong username and/or password", HttpStatus.NOT_FOUND);
         }else{
+            signed_email= user.getEmail();
             return new ResponseEntity<>("Welcome "+user.getEmail(), HttpStatus.OK);
         }
 
