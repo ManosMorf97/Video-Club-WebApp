@@ -4,7 +4,7 @@ public class Bookmark {
 
     public Bookmark(){}
 
-    public Bookmark(String movieId, String email) {
+    public Bookmark(String email,String movieId) {
         this.movieId = movieId;
         this.email = email;
     }

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-public class BookmarkPageController {
+public class BookmarkController {
 
     private DAO<Bookmark> bookmarkDAO;
 
-    public BookmarkPageController(DAO<Bookmark> bookmarkDAO){
+    public BookmarkController(DAO<Bookmark> bookmarkDAO){
         this.bookmarkDAO=bookmarkDAO;
     }
 

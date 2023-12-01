@@ -29,7 +29,7 @@ public class UsersJdbcDAO implements DAO<User>{
     }
     @Override
     public List<User> list() {
-        String sql="Select user from Users";
+        String sql="Select * from Users";
         return jdbcTemplate.query(sql,rowMapper);
     }
 
@@ -47,7 +47,7 @@ public class UsersJdbcDAO implements DAO<User>{
     }
     @Override
     public Optional<User> get(User user) {
-        String sql="Select * from Users where email=? and password=?";
+        String sql="select * from Users where email=? and password=?";
         try{
             User user2=jdbcTemplate.queryForObject(sql,rowMapper,user.getEmail(),user.getPassword());
             return Optional.ofNullable(user2);

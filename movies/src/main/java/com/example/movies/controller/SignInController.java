@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 public class SignInController {
 
-    private static String signed_email=null;
+    private static String signed_email="";
 
     public static String getSigned_email() {
         return signed_email;

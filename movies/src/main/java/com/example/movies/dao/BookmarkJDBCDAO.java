@@ -41,6 +41,7 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
     @Override
     public boolean Create(Bookmark bookmark) {
         String sql="insert into Bookmarks values (?,?)";
+        log.info("Email bm "+bookmark.getEmail());
         int insert=jdbcTemplate.update(sql,bookmark.getEmail(),bookmark.getMovieId());
         if (insert==1){
             log.info("The movie with Id "+bookmark.getMovieId()+" has been added to your bookmark");
@@ -77,7 +78,7 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
 
     @Override
     public void delete(Bookmark bm) {
-            String sql = "delete from Bookmarks where movieId=?";
-            jdbcTemplate.update(sql, bm.getEmail(),bm.getMovieId());
+            String sql = "delete from Bookmarks where movieId=? and email=? ";
+            jdbcTemplate.update(sql,bm.getMovieId(),bm.getEmail());
     }
 }
