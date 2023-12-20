@@ -1,45 +1,66 @@
-body{
-    background-color: hsla(0, 0%, 0%, 0.9);
-}
-.external-div{
-    color:white;
-    overflow:hidden;
-    background-color: hsla(0, 0%, 100%, 0.1);
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 20vh;
-    width: 80%;
-    height: 40vh;
-    border-color:hsla(109, 87%, 49%, 0.703);
-    border-style: solid;
+@media screen{
+    body{
+        background-color: hsla(0, 0%, 0%, 0.9);
+    }
 
-}
-.internal-div{
-    height: 100%;  
-    background-color: hsla(0, 0%, 100%, 0.1);   
-}
+    .external-div{
+        color:white;
+        overflow:hidden;
+        background-color: hsla(0, 0%, 100%, 0.1);
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 10vh;
+        width: 70%;
+        height: 60vh;
+        border-color:hsla(109, 87%, 49%, 0.703);
+        border-style: solid;
+        
 
-input{
-    margin-right:20%;
-    margin-top:2%;
-    float: right;
-    height:100%;
-}
+    }
+    .internal-div{
+        overflow: hidden;
+        height: 100%;  
+        background-color: hsla(0, 0%, 100%, 0.1);   
+    }
 
-.llabel{
-    margin-left:3%;
-    margin-right:3%;
-    margin-top:2%;
-    display: block;
-    height:1%;
-}
+    .bottom > input{
+        margin-left: 4%; 
+    }
 
-.buttonS{
-    margin-top:5%;
-    background-color: hsla(0, 0%, 0%, 0);
-    color:white;
-}
+    .bottom{
+        margin-top: 1%;
+        margin-left: 4%;
+    }
 
-.buttonS:hover{
-    background-color: hsla(0, 0%, 100%, 0.1)
+
+    .llabel{
+        float: left;
+        display: block;
+        width:30%;
+    }
+
+    .buttonS{
+        margin-top:2%;
+        margin-left:60%;
+        background-color: hsla(131, 94%, 48%, 0.844);
+        color:black;
+        height:5vh;
+        width: 13%;
+        z-index: 1;
+        border-radius:3%; 
+    }
+
+    .bottom a{
+        margin-left: 37%;
+        color:rgba(255, 255, 255, 0.9);
+    }
+
+    .buttonS:hover{
+        background-color: hsla(131, 94%, 48%, 0.944)
+    }
+
+    a:hover{
+        color:rgb(255, 255, 255);
+    }
+
 }
