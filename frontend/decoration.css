@@ -1,0 +1,45 @@
+body{
+    background-color: hsla(0, 0%, 0%, 0.9);
+}
+.external-div{
+    color:white;
+    overflow:hidden;
+    background-color: hsla(0, 0%, 100%, 0.1);
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20vh;
+    width: 80%;
+    height: 40vh;
+    border-color:hsla(109, 87%, 49%, 0.703);
+    border-style: solid;
+
+}
+.internal-div{
+    height: 100%;  
+    background-color: hsla(0, 0%, 100%, 0.1);   
+}
+
+input{
+    margin-right:20%;
+    margin-top:2%;
+    float: right;
+    height:100%;
+}
+
+.llabel{
+    margin-left:3%;
+    margin-right:3%;
+    margin-top:2%;
+    display: block;
+    height:1%;
+}
+
+.buttonS{
+    margin-top:5%;
+    background-color: hsla(0, 0%, 0%, 0);
+    color:white;
+}
+
+.buttonS:hover{
+    background-color: hsla(0, 0%, 100%, 0.1)
+}
