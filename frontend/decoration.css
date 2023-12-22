@@ -12,6 +12,14 @@
         pointer-events: none;
     }
 
+    .sign-up-height{
+      height: 60vh;
+    }
+
+    .sign-in-height{
+      height: 40vh;
+    }
+
     .external-div{
        /* opacity: 0.3; */
         /*pointer-events: none;*/
@@ -22,7 +30,6 @@
         margin-right: 15%;
         margin-top: 10vh;
         width: 70%;
-        height: 60vh;
         margin-bottom: 10vh;
         border-color:hsla(109, 87%, 49%, 0.703);
         border-style: solid;
@@ -80,10 +87,8 @@
         /*display: inline-block;*/
         display: none;
         position: fixed;
-        margin-top: 20%;
-        margin-bottom: 50%;
-        margin-left: 45%;
-        margin-right: 30%;
+        top: 50vh;
+        left: 50vw;
       }
       .lds-ring div {
         box-sizing: border-box;
