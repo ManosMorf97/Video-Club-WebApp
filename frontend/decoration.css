@@ -120,38 +120,7 @@
         }
       }
 
-      .searcher{
-        width: 100%;
-        height: 5vh;
-        background-color: hsla(0, 0%, 100%, 0.1);
-      }
-
-      .sub-searcher{
-        float: right;
-        width: 70%;
-        height: 100%;
-        background-color: black;
-        border-color: hsla(131, 94%, 48%, 0.844);
-      }
-
-      .input-search{
-        float: right;
-        width: 92%;
-        height: 90%;
-        color: rgb(210, 210, 210);
-        background-color: black;
-        font-size: 1rem;
-        border: none;
-        outline: none;       
-      }
-      
-      i{
-        color:white;
-      }
-
-      span{
-        font-size:1.5rem;
-      }
+     
 
 
 }

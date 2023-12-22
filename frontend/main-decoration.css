@@ -1,0 +1,67 @@
+.options{
+    width: 100%;
+    height: 5vh;
+    background-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.searcher{
+    float: left;
+    width: 40%;
+    height: 100%;
+    background-color: black;
+    border-style:solid;
+    border-color: hsla(131, 94%, 48%, 0.844);
+
+}
+
+.input-search{
+    float: left;
+    width: 92%;
+    height: 88%;
+    color: rgb(210, 210, 210);
+    background-color: black;
+    font-size: 1rem;
+    border: none;
+    outline: none;       
+}
+
+.BookMarks{
+    width:37%;
+    height: 100%;
+    float: left;
+    
+    
+}
+
+.LogOut{
+    width:22.1%;
+    height: 100%;
+    float: left;
+}
+
+.bookmarks::before{
+    color: rgb(210, 210, 210);
+    font-size: 2.1rem;
+    content: "MyBookMarks ";
+}
+
+.logout::before{
+    color: rgb(210, 210, 210);
+    font-size: 2.1rem;
+    content: "LogOut ";/* javascript */
+}
+
+.BookMarks:hover{
+    background-color: rgba(251, 226, 0, 0.59);
+    color: black;
+}
+
+.LogOut:hover{
+    background-color: rgba(251, 226, 0, 0.59);
+    color: black;
+}
+
+
+
+  
+  
