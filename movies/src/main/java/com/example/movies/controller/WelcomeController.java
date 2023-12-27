@@ -17,9 +17,8 @@ public class WelcomeController {
     }
 
     @PostMapping("/Welcome")
-    public ResponseEntity<String> addBookmark(String movieId){
-        Bookmark bm=new Bookmark(SignInController.getSigned_email(),movieId);
-        bookmarkDAO.Create(bm);
+    public ResponseEntity<String> addBookmark(Bookmark bookmark){
+        bookmarkDAO.Create(bookmark);
         return new ResponseEntity<String>("The movie has been added", HttpStatus.OK);
 
     }

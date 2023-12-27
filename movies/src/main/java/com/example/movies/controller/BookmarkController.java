@@ -4,6 +4,7 @@ import com.example.movies.dao.DAO;
 import com.example.movies.model.Bookmark;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -17,14 +18,14 @@ public class BookmarkController {
         this.bookmarkDAO=bookmarkDAO;
     }
 
-    @GetMapping("/MyBookmarks")
-    public Optional<Bookmark> myBookmarks(){
-        return bookmarkDAO.get(new Bookmark(SignInController.getSigned_email()));
+    @PostMapping("/MyBookmarks")
+    public Optional<Bookmark> myBookmarks(Bookmark bookmark){//email only
+        return bookmarkDAO.get(bookmark);
     }
 
     @DeleteMapping("/MyBookmarks")
-    public void deleteBookmark(String movieId){
-        bookmarkDAO.delete(new Bookmark(SignInController.getSigned_email(),movieId));
+    public void deleteBookmark(Bookmark bookmark){// all parameters
+        bookmarkDAO.delete(bookmark);
     }
 
 }
