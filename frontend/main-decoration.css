@@ -15,7 +15,6 @@
 }
 
 .input-search{
-    float: left;
     width: 92%;
     height: 88%;
     color: rgb(210, 210, 210);
@@ -29,8 +28,7 @@
     width:37%;
     height: 100%;
     float: left;
-    
-    
+    margin-bottom: 10%;
 }
 
 .LogOut{
@@ -61,6 +59,20 @@
     color: black;
 }
 
+.external-div2{
+    /* opacity: 0.3; */
+     /*pointer-events: none;*/
+     color:white;
+     overflow:hidden;
+     background-color: hsla(0, 0%, 100%, 0.1);
+     margin-left: 15%;
+     margin-right: 15%;
+     margin-top: 10vh;
+     width: 70%;
+     margin-bottom: 10vh;
+     border-color:hsla(109, 87%, 49%, 0.703);
+     border-style: solid;
+ }
 
 
   
