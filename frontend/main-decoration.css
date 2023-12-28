@@ -12,6 +12,11 @@
 
 }
 
+.Welcomepage{
+    float: left;
+    width: 33%;
+}
+
 .input-search{
     color: rgb(210, 210, 210);
     background-color: black;
@@ -46,13 +51,26 @@
     content: "LogOut ";/* javascript */
 }
 
-.BookMarks:hover{
+.welcomepage::before{
+    color: rgb(210, 210, 210);
+    font-size: 1.9rem;
+    content: "Welcome ";/* javascript */
+}
+
+.BookMarks:hover, .Welcomepage:hover, .LogOut:hover{
     background-color: rgba(251, 226, 0, 0.59);
     color: black;
 }
 
-.LogOut:hover{
+.BookMark-Component{
+    width:33%;
+}
+
+.BookMark-Checked{
     background-color: rgba(251, 226, 0, 0.59);
+}
+
+.bookmark-checked::before{
     color: black;
 }
 
