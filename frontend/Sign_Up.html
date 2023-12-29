@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="decoration.css">
-    <title>Sign Up</title>
-</head>
-<body>
-    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-    <div class="external-div sign-up-height">
-        <h1>&#160 &#160 &#160 Complete the Registration</h1>
-        <div class="internal-div">
-            <form method="post">
-                <div class="bottom" id="email_bottom">
-                    <label class="llabel" for id="email">email:</label>
-                    <input placeholder="email" id="email" type="email">
-                </div>
-                <div class="bottom">
-                    <label class="llabel" for id="password">password:</label>
-                    <input placeholder="password" id="password" type="password">
-                </div>
-                <div class="bottom">
-                    <label class="llabel" for id="repeated_password">repeat password:</label>
-                    <input placeholder="repeated_password" id="repeated_password" type="password">
-                </div>
-                <div class="bottom">
-                    <a href="">Already have an account, Log in</a>
-                </div>
-                <br>
-                <input class="buttonS" type="submit" value="Sign Up">
-            </form>
+<html>
+    <head>
+        <link rel="stylesheet" href="decoration.css">
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div class="external-div sign-up-height">
+            <h1>&#160 &#160 &#160 Complete the Registration</h1>
+            <div class="internal-div">
+                <form method="post" id="SignUp">
+                    <div class="bottom" id="email_bottom">
+                        <label  for="email" class="llabel">email:</label>
+                        <input placeholder="email" id="email" type="email" required>
+                    </div>
+                    <div class="bottom">
+                        <label  for="password" class="llabel">password:</label>
+                        <input placeholder="password" id="password" type="password" required>
+                    </div>
+                    <div class="bottom">
+                        <label  for="repeated_password" class="llabel">repeat password:</label>
+                        <input placeholder="repeated_password" id="repeated_password" type="password" required>
+                    </div>
+                    <div class="bottom">
+                        <a href="">Already have an account, Log in</a>
+                    </div>
+                    <br>
+                    <input class="buttonS" type="submit" value="Sign Up">
+                </form>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
+</html>
+<script src=./authentication.js type="module"></script>

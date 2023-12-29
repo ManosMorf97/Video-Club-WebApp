@@ -66,6 +66,7 @@
         color:black;
         height:5vh;
         width: 13%;
+        font-size: 0.8rem;
         z-index: 1;
         border-radius:3%;
         border-color: hsla(131, 94%, 48%, 0.844); 
