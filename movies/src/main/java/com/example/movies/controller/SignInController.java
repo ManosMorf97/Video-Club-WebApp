@@ -2,10 +2,10 @@ package com.example.movies.controller;
 
 import com.example.movies.dao.DAO;
 import com.example.movies.model.User;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -30,8 +30,9 @@ public class SignInController {
         this.dao=dao;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @PostMapping("/SignIn")
-    public ResponseEntity<String> log_in(User user){
+    public ResponseEntity<String> log_in(@RequestBody User user){
         Optional<User> logged_in=dao.get(new User(user.getEmail(),user.getPassword()));
         if (logged_in==null){
             return new ResponseEntity<>("Wrong username and/or password", HttpStatus.NOT_FOUND);

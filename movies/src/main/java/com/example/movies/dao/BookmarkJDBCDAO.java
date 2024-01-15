@@ -62,7 +62,7 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
     @Override
     public Optional<Bookmark> getUnique(Bookmark bookmark) {
         try {
-            String sql = "Select for Bookmarks where email=? and movieId=?";
+            String sql = "Select for Bookmarks where email=? and movieId=? order by movieId";
             Bookmark bookmark1 = jdbcTemplate.queryForObject(sql, rowMapper, bookmark.getEmail(), bookmark.getMovieId());
             return Optional.ofNullable(bookmark1);
         }catch(DataAccessException ex){
