@@ -45,6 +45,6 @@ document.getElementById("inputSearch").addEventListener("keyup",(e)=>{
     let search_value=document.getElementById("inputSearch").value
     let url="http://www.omdbapi.com/?apikey=1c07e2b7&&s="+search_value
     fetch(url).then((response)=>{
-        console.log(response.body);
+        console.log(response.json())
     })
 })

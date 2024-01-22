@@ -25,7 +25,7 @@ public class BookmarkController {
 
     @DeleteMapping("/MyBookmarks")
     public void deleteBookmark(Bookmark bookmark){// all parameters
-        bookmarkDAO.delete(bookmark);
+        bookmarkDAO.delete(bookmark);//
     }
 
 }
