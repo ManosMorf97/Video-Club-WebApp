@@ -85,6 +85,10 @@
         color:rgb(255, 255, 255);
     }
 
+    a:visited{
+        text-decoration: none;
+    }
+
     .lds-ring {
         /*display: inline-block;*/
       display: none;
@@ -121,6 +125,7 @@
         transform: rotate(360deg);
       }
     }
+
 
      
 
