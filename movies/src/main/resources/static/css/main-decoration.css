@@ -59,7 +59,6 @@
 
 .BookMarks:hover, .Welcomepage:hover, .LogOut:hover{
     background-color: rgba(251, 226, 0, 0.59);
-    color: black;
 }
 
 .BookMark-Component{
@@ -87,8 +86,4 @@
      margin-bottom: 10vh;
      border-color:hsla(109, 87%, 49%, 0.703);
      border-style: solid;
- }
-
-
-  
-  
+}
