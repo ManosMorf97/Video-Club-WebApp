@@ -41,10 +41,27 @@ for(let i=0; i<spanners.length; i++){
     spanners[i].addEventListener("mouseover",changeindexedcolor(i));
 }
 
-document.getElementById("inputSearch").addEventListener("keyup",(e)=>{
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+
+async function getMovies(url){
+    const response=await fetch(url)
+    return response.json()
+
+}
+
+async function getMoviesJson(url){
+    const response_json=await getMovies(url)
+    return response_json.Search
+}
+
+document.getElementById("inputSearch").addEventListener("keyup",async function (e){
     let search_value=document.getElementById("inputSearch").value
     let url="http://www.omdbapi.com/?apikey=1c07e2b7&&s="+search_value
-    fetch(url).then((response)=>{
-        console.log(response.json())
-    })
+    let data=await getMoviesJson(url)
+    console.log(data)
 })
