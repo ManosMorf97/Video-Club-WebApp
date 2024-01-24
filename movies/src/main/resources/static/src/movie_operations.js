@@ -59,9 +59,57 @@ async function getMoviesJson(url){
     return response_json.Search
 }
 
+async function getBlob(url){
+    const response=await fetch(url)
+    return response.blob()
+}
+
+async function getImageURL(url){
+    const blob=await getBlob(url)
+    return URL.createObjectURL(blob)
+}
+
 document.getElementById("inputSearch").addEventListener("keyup",async function (e){
+    let movie_at=document.getElementsByClassName("movies")[0]
+    removeAllChildNodes(movie_at)
     let search_value=document.getElementById("inputSearch").value
     let url="http://www.omdbapi.com/?apikey=1c07e2b7&&s="+search_value
-    let data=await getMoviesJson(url)
-    console.log(data)
+    if(search_value===undefined || search_value==="")
+        return -1;
+    let movies=await getMoviesJson(url)
+    console.log(movies)
+    if(movies===undefined)
+        return -1;
+    for(let movie of movies){
+        let external_div=document.createElement("div")
+        external_div.classList.add("external-div")
+        let attributes=["h1","h2"]
+        let properties=[movie.Title,movie.Year]
+        for(let i=0; i<2; i++){
+            let element=document.createElement(attributes[i])
+            let text=document.createTextNode(properties[i])
+            element.appendChild(text)
+            external_div.appendChild(element)
+        }
+        let imageURL=await getImageURL(movie.Poster)
+        let img_el=document.createElement("img")
+        img_el.setAttribute("src",imageURL)
+        img_el.setAttribute("alt","none") //make it better
+        img_el.setAttribute("width","200")
+        img_el.setAttribute("height","200")
+        external_div.appendChild(img_el)
+        external_div.appendChild(document.createElement("br"))
+        let bottom_div=document.createElement("div")
+        bottom_div.classList.add("bottom")
+        let a_bottom=document.createElement("a")
+        a_bottom.setAttribute("href","")
+        a_bottom.setAttribute("id","more"+movie.imdbId)
+        a_bottom.appendChild(document.createTextNode("more.."))
+        bottom_div.appendChild(a_bottom)
+        external_div.appendChild(bottom_div)
+        external_div.appendChild(document.createElement("br"))
+        movie_at.appendChild(external_div)
+    }
+    
+
 })
