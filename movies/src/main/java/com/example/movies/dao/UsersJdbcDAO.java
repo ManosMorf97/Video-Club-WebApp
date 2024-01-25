@@ -36,7 +36,12 @@ public class UsersJdbcDAO implements DAO<User>{
     @Override
     public boolean Create(User user) {
         String sql="Insert into Users values(?,?)";
-        int insert=jdbcTemplate.update(sql,user.getEmail(),user.getPassword());
+        int insert=-1;
+        try {
+            insert = jdbcTemplate.update(sql, user.getEmail(), user.getPassword());
+        }catch(Exception e){
+            //e.printStackTrace();
+        }
         if (insert==1){
             log.info("New user added "+user.getEmail());
             return true;

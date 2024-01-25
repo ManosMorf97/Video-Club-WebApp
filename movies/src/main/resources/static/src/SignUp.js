@@ -10,6 +10,9 @@ document.getElementById("SignUp").addEventListener("submit",(e)=>{
     if(document.getElementById("password").value!=document.getElementById("repeated_password").value)
         error="Passwords do not match";
     else{
-        post_data("http://localhost:8080/SignUp",md5,false);
+        let message={}
+        message["success"]="The user has created"
+        message["error"]="This user already exists"
+        post_data("http://localhost:8080/SignUp",md5,false,message);
     }
 });

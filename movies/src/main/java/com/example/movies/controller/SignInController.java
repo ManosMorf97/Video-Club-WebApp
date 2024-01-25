@@ -23,7 +23,6 @@ public class SignInController {
         this.dao=dao;
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @PostMapping("/SignIn")
     @ResponseBody
     public ResponseEntity<String> log_in(@RequestBody User user){

@@ -7,7 +7,7 @@ function afterwards(response){
         
 }
 
-let post_data=function(url,md5,connection_attempt){
+let post_data=function(url,md5,connection_attempt,message){
     let successfull=false;
     let hashed_password=md5.MD5(document.getElementById("password").value);
     let email=document.getElementById("email").value;
@@ -33,8 +33,12 @@ let post_data=function(url,md5,connection_attempt){
         let attempted=afterwards(response);
         if(connection_attempt&&attempted){
             localStorage.setItem("LoggedIn",document.getElementById("email").value);
-        }else{
-            console.log("Wrong Credentials");
+        }
+        if(attempted){
+            console.log(message["success"])
+        }
+        else{
+            console.log(message["error"]);
         }
         successfull=true;})
     .catch((error)=>{ afterwards(error);
