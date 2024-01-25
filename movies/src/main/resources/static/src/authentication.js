@@ -3,7 +3,7 @@ function afterwards(response){
     let external_div=document.getElementsByClassName("external-div")[0].style;
     external_div.opacity="1";
     external_div["pointer-events"]="auto";
-    console.log(response.text())
+    return response.ok
         
 }
 
@@ -30,9 +30,11 @@ let post_data=function(url,md5,connection_attempt){
         body:JSON.stringify(data)
     })
     .then( (response)=>{ 
-        afterwards(response);
-        if(connection_attempt){
+        let attempted=afterwards(response);
+        if(connection_attempt&&attempted){
             localStorage.setItem("LoggedIn",document.getElementById("email").value);
+        }else{
+            console.log("Wrong Credentials");
         }
         successfull=true;})
     .catch((error)=>{ afterwards(error);
@@ -40,7 +42,3 @@ let post_data=function(url,md5,connection_attempt){
 }
 
 export {post_data,afterwards}
-
-
-
-

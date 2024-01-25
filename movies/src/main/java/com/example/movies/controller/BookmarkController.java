@@ -2,10 +2,7 @@ package com.example.movies.controller;
 
 import com.example.movies.dao.DAO;
 import com.example.movies.model.Bookmark;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -19,11 +16,13 @@ public class BookmarkController {
     }
 
     @PostMapping("/MyBookmarks")
+    @ResponseBody
     public Optional<Bookmark> myBookmarks(Bookmark bookmark){//email only
         return bookmarkDAO.get(bookmark);
     }
 
     @DeleteMapping("/MyBookmarks")
+    @ResponseBody
     public void deleteBookmark(Bookmark bookmark){// all parameters
         bookmarkDAO.delete(bookmark);//
     }

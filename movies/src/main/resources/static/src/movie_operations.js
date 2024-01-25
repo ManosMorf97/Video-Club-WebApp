@@ -29,6 +29,11 @@ let spanners=document.getElementsByTagName("span");
 
 
 */
+if(localStorage.getItem("LoggedIn")===null||localStorage.getItem("LoggedIn")===undefined){
+    let body=document.getElementsByTagName("body")[0].style;
+    body.opacity="0.3";
+    body["pointer-events"]="none";
+}
 
 function changeindexedcolor(i){
     return function changecontentcolor(e){

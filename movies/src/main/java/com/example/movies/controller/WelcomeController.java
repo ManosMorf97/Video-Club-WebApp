@@ -5,6 +5,7 @@ import com.example.movies.model.Bookmark;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,6 +18,7 @@ public class WelcomeController {
     }
 
     @PostMapping("/Welcome")
+    @ResponseBody
     public ResponseEntity<String> addBookmark(Bookmark bookmark){
         bookmarkDAO.Create(bookmark);
         return new ResponseEntity<String>("The movie has been added", HttpStatus.OK);

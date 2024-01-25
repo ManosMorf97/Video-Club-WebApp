@@ -6,21 +6,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
 @RestController
 public class SignInController {
 
-    private static String signed_email="";
 
-    public static String getSigned_email() {
-        return signed_email;
-    }
-
-    public static void setSigned_email(String signed_email) {
-        SignInController.signed_email = signed_email;
-    }
 
 
 
@@ -32,12 +25,13 @@ public class SignInController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500/")
     @PostMapping("/SignIn")
+    @ResponseBody
     public ResponseEntity<String> log_in(@RequestBody User user){
         Optional<User> logged_in=dao.get(new User(user.getEmail(),user.getPassword()));
         if (logged_in==null){
             return new ResponseEntity<>("Wrong username and/or password", HttpStatus.NOT_FOUND);
         }else{
-            signed_email= user.getEmail();
+
             return new ResponseEntity<>("Welcome "+user.getEmail(), HttpStatus.OK);
         }
 

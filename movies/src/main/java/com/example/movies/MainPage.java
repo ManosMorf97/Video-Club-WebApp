@@ -11,6 +11,6 @@ public class MainPage {
 
     @PostMapping("/MainPage")
     public void store(String movieId){
-        SignInController.getSigned_email();
+        //SignInController.getSigned_email();
     }
 }
