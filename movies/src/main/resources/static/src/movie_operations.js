@@ -74,6 +74,55 @@ async function getImageURL(url){
     return URL.createObjectURL(blob)
 }
 
+function bottomHref(bottom_div,info_message){
+    let a_bottom=document.createElement("a")
+    a_bottom.setAttribute("href","javascript:void(0);")
+    //a_bottom.setAttribute("id","more"+movie.imdbId)
+    a_bottom.appendChild(document.createTextNode(info_message))
+    bottom_div.appendChild(a_bottom)
+    return a_bottom
+}
+
+
+let moreInfo=null
+let lessInfo=null
+
+moreInfo=function (external_div,movie,bottom_div,a_bottom){
+    return function(e){
+        let more_info_div=document.createElement("div")
+        bottom_div.removeChild(a_bottom)
+        external_div.removeChild(bottom_div)
+        let added_attributes=["imdbID","Type"]
+        for(let attribute of added_attributes){
+            let element=document.createElement("h3")
+            element.appendChild(document.createTextNode(movie[attribute]))
+            more_info_div.appendChild(element)
+        }
+        let button_elemenent=document.createElement("button")
+        button_elemenent.classList.add("buttonS")
+        button_elemenent.appendChild(document.createTextNode("LIKE"))
+        let less_bottom_div=document.createElement("div")
+        less_bottom_div.classList.add("bottom")
+        less_bottom_div.appendChild(bottomHref(bottom_div,"less.."))
+        more_info_div.appendChild(button_elemenent)
+        more_info_div.appendChild(less_bottom_div)
+        external_div.appendChild(more_info_div)
+        less_bottom_div.addEventListener("click",lessInfo(external_div,more_info_div,movie))
+    }
+}
+
+lessInfo=function(external_div,more_info_div,movie){
+    return function(e){
+        external_div.removeChild(more_info_div)
+        let bottom_div=document.createElement("div")
+        bottom_div.classList.add("bottom")
+        let a_bottom=bottomHref(bottom_div,"more..")
+        bottom_div.appendChild(a_bottom)
+        external_div.appendChild(bottom_div)
+        bottom_div.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom))
+    }
+}
+
 document.getElementById("inputSearch").addEventListener("keyup",async function (e){
     let movie_at=document.getElementsByClassName("movies")[0]
     removeAllChildNodes(movie_at)
@@ -106,11 +155,8 @@ document.getElementById("inputSearch").addEventListener("keyup",async function (
         external_div.appendChild(document.createElement("br"))
         let bottom_div=document.createElement("div")
         bottom_div.classList.add("bottom")
-        let a_bottom=document.createElement("a")
-        a_bottom.setAttribute("href","")
-        a_bottom.setAttribute("id","more"+movie.imdbId)
-        a_bottom.appendChild(document.createTextNode("more.."))
-        bottom_div.appendChild(a_bottom)
+        let a_bottom=bottomHref(bottom_div,"more..")
+        a_bottom.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom))
         external_div.appendChild(bottom_div)
         external_div.appendChild(document.createElement("br"))
         movie_at.appendChild(external_div)
