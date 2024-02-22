@@ -2,12 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="css/decoration.css">
-        <link rel="stylesheet" type="text/css" href="css/main-decoration.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/decoration.css" />
+        <link rel="stylesheet" type="text/css" href="css/main-decoration.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <title>Welcome</title>
     </head>
     <body>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         <div class="options">
             <div class="searcher">
                 <input id="inputSearch" placeholder="..search" />
@@ -18,12 +19,12 @@
                 </a>
             </div>
             <div class="LogOut">
-                <a href="" style="text-decoration:none;">
+                <a href="http://localhost:8080/" id="bye" style="text-decoration:none;">
                     &#160 <span class="logout"></span>
                 </a>
             </div>
         </div>
-        <h1 style="float:left;">Welcome manosmorf97@gmail.com</h1>
+        <h1 style="float:left;" id="welcome_user"></h1>
         <div class="movies">
             
         </div>

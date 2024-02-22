@@ -1,3 +1,4 @@
+import root_module from "./root_module.js";
 let spanners=document.getElementsByTagName("span");
 
 /*
@@ -33,6 +34,9 @@ if(localStorage.getItem("LoggedIn")===null||localStorage.getItem("LoggedIn")===u
     let body=document.getElementsByTagName("body")[0].style;
     body.opacity="0.3";
     body["pointer-events"]="none";
+}else{
+    document.getElementById("welcome_user").appendChild(
+        document.createTextNode("Welcome "+localStorage.getItem("LoggedIn")))
 }
 
 function changeindexedcolor(i){
@@ -87,6 +91,29 @@ function bottomHref(bottom_div,info_message){
 let moreInfo=null
 let lessInfo=null
 
+function addmovie(ID){
+    return function(){
+        let data={}
+        data['movieId']=ID
+        data['email']=localStorage.getItem("LoggedIn")
+        let url='http://localhost:8080/Welcome'
+        root_module.activate_loader()
+        fetch(url,{
+            method:'post',
+            mode:'cors',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data)
+        }).then((response)=>root_module.afterwards(response)).
+        catch((response)=>root_module.afterwards(response))
+    }
+}
+
+function LogOut(){
+    localStorage.removeItem("LoggedIn")
+}
+
 moreInfo=function (external_div,movie,bottom_div,a_bottom){
     return function(e){
         let more_info_div=document.createElement("div")
@@ -101,6 +128,7 @@ moreInfo=function (external_div,movie,bottom_div,a_bottom){
         let button_elemenent=document.createElement("button")
         button_elemenent.classList.add("buttonS")
         button_elemenent.appendChild(document.createTextNode("LIKE"))
+        button_elemenent.addEventListener("click",addmovie(movie.imdbID))
         let less_bottom_div=document.createElement("div")
         less_bottom_div.classList.add("bottom")
         less_bottom_div.appendChild(bottomHref(bottom_div,"less.."))
@@ -122,6 +150,7 @@ lessInfo=function(external_div,more_info_div,movie){
         bottom_div.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom))
     }
 }
+document.getElementById("bye").onclick=LogOut
 
 document.getElementById("inputSearch").addEventListener("keyup",async function (e){
     let movie_at=document.getElementsByClassName("movies")[0]

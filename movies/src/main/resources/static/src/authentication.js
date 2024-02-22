@@ -1,21 +1,11 @@
-function afterwards(response){
-    document.getElementsByClassName("lds-ring")[0].style.display="none";
-    let external_div=document.getElementsByClassName("external-div")[0].style;
-    external_div.opacity="1";
-    external_div["pointer-events"]="auto";
-    return response.ok
-        
-}
+import root_module from "./root_module.js";
 
 let post_data=function(url,md5,connection_attempt,message){
     let successfull=false;
     let hashed_password=md5.MD5(document.getElementById("password").value);
     let email=document.getElementById("email").value;
     console.log(email);
-    document.getElementsByClassName("lds-ring")[0].style.display="inline-block";
-    let external_div=document.getElementsByClassName("external-div")[0].style;
-    external_div.opacity="0.3";
-    external_div["pointer-events"]="none";
+    root_module.activate_loader()
     let data={}
     data["email"]=email;
     data["password"]=hashed_password;
@@ -30,7 +20,7 @@ let post_data=function(url,md5,connection_attempt,message){
         body:JSON.stringify(data)
     })
     .then( (response)=>{ 
-        let attempted=afterwards(response);
+        let attempted=root_module.afterwards(response);
         if(connection_attempt&&attempted){
             localStorage.setItem("LoggedIn",document.getElementById("email").value);
         }
@@ -41,8 +31,8 @@ let post_data=function(url,md5,connection_attempt,message){
             console.log(message["error"]);
         }
         successfull=true;})
-    .catch((error)=>{ afterwards(error);
+    .catch((error)=>{ root_module.afterwards(error);
         successfull=false;})
 }
 
-export {post_data,afterwards}
+export {post_data}
