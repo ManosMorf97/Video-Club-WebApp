@@ -4,6 +4,9 @@ import com.example.movies.dao.DAO;
 import com.example.movies.model.Bookmark;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.Optional;
 
 @RestController
@@ -17,13 +20,13 @@ public class BookmarkController {
 
     @PostMapping("/MyBookmarks")
     @ResponseBody
-    public Optional<Bookmark> myBookmarks(Bookmark bookmark){//email only
-        return bookmarkDAO.get(bookmark);
+    public ArrayList<Bookmark> myBookmarks(@RequestBody Bookmark bookmark){//email only
+        return (ArrayList<Bookmark>) bookmarkDAO.ListOf(bookmark);
     }
 
     @DeleteMapping("/MyBookmarks")
     @ResponseBody
-    public void deleteBookmark(Bookmark bookmark){// all parameters
+    public void deleteBookmark(@RequestBody Bookmark bookmark){// all parameters
         bookmarkDAO.delete(bookmark);//
     }
 

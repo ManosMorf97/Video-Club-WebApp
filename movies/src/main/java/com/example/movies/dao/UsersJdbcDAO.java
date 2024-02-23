@@ -82,4 +82,9 @@ public class UsersJdbcDAO implements DAO<User>{
         int update=jdbcTemplate.update(sql,user.getEmail());
 
     }
+
+    @Override
+    public List<User> ListOf(User user) {
+        return null;
+    }
 }

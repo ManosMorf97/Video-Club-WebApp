@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.awt.print.Book;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,12 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
        return jdbcTemplate.query(sql,rowMapper);
     }
 
-
+    @Override
+    public List<Bookmark> ListOf(Bookmark bm){
+        String sql="select * from Bookmarks where email=? order by movieId" ;
+        List<Bookmark> bookmarks=jdbcTemplate.query(sql,rowMapper,bm.getEmail());
+        return bookmarks;
+    }
     @Override
     public boolean Create(Bookmark bookmark) {
         String sql="insert into Bookmarks values (?,?)";
@@ -54,9 +60,7 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
 
     @Override
     public Optional<Bookmark> get(Bookmark bm) {
-        String sql="select * from Bookmarks where email=?";
-        Bookmark bookmark=jdbcTemplate.queryForObject(sql,rowMapper,bm.getEmail());
-        return Optional.ofNullable(bookmark);
+        return null;
     }
 
     @Override

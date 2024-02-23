@@ -1,5 +1,4 @@
 import root_module from "./root_module.js";
-let spanners=document.getElementsByTagName("span");
 
 /*
 <div class="external-div">
@@ -30,25 +29,56 @@ let spanners=document.getElementsByTagName("span");
 
 
 */
-if(localStorage.getItem("LoggedIn")===null||localStorage.getItem("LoggedIn")===undefined){
-    let body=document.getElementsByTagName("body")[0].style;
-    body.opacity="0.3";
-    body["pointer-events"]="none";
-}else{
-    document.getElementById("welcome_user").appendChild(
-        document.createTextNode("Welcome "+localStorage.getItem("LoggedIn")))
+
+function bring_my_movies(){
+    if(localStorage.getItem("MyMovies")!=null&&localStorage.getItem("MyMovies")!=undefined)
+        return localStorage.getItem("MyMovies")
+    root_module.activate_loader()
+    let data={}
+    data["email"]=localStorage.getItem("LoggedIn")
+    let url="http://localhost:8080/MyBookmarks"
+    fetch(url,{
+        method:'post',
+        mode:'cors',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+    }).then((response)=>response.json()).
+    then((response)=>{
+        localStorage.setItem("MyMovies",JSON.stringify(response.map((res)=>res.movieId)))
+        console.log(JSON.parse(localStorage.getItem("MyMovies")))
+        root_module.afterwards(response)
+    })
 }
 
-function changeindexedcolor(i){
-    return function changecontentcolor(e){
-        console.log("WWWWWWWWWWW")
-        spanners[i].classList.add("hoveredspan");
+function begin(){
+
+    let spanners=document.getElementsByTagName("span");
+    if(localStorage.getItem("LoggedIn")===null||localStorage.getItem("LoggedIn")===undefined){
+        let body=document.getElementsByTagName("body")[0].style;
+        body.opacity="0.3";
+        body["pointer-events"]="none";
+    }else{
+        document.getElementById("welcome_user").appendChild(
+            document.createTextNode("Welcome "+localStorage.getItem("LoggedIn")))
+        bring_my_movies()
     }
-    
+
+    function changeindexedcolor(i){
+        return function changecontentcolor(e){
+            console.log("WWWWWWWWWWW")
+            spanners[i].classList.add("hoveredspan");
+        }
+        
+    }
+
+    for(let i=0; i<spanners.length; i++){
+        spanners[i].addEventListener("mouseover",changeindexedcolor(i));
+    }
 }
-for(let i=0; i<spanners.length; i++){
-    spanners[i].addEventListener("mouseover",changeindexedcolor(i));
-}
+
+
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -91,30 +121,98 @@ function bottomHref(bottom_div,info_message){
 let moreInfo=null
 let lessInfo=null
 
-function addmovie(ID){
-    return function(){
-        let data={}
-        data['movieId']=ID
-        data['email']=localStorage.getItem("LoggedIn")
-        let url='http://localhost:8080/Welcome'
-        root_module.activate_loader()
-        fetch(url,{
-            method:'post',
-            mode:'cors',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(data)
-        }).then((response)=>root_module.afterwards(response)).
-        catch((response)=>root_module.afterwards(response))
+//https://www.geeksforgeeks.org/binary-search-in-javascript/
+function search_my_movies(arr, x, start, end, insert=false) {
+    // Base Condition
+    if (start > end){
+        if(insert){
+            insert_localy_movie_if_possible(arr,x,start)
+        }
+        return -1;
+    } 
+ 
+    let mid = Math.floor((start + end) / 2);
+
+    if(insert){
+        insert_localy_movie_if_possible(arr,x,start,end)
+    }
+
+    if (arr[mid] === x) return mid;
+    
+    if (arr[mid] > x)
+        return search_my_movies(arr, x, start, mid - 1);
+    else
+        return search_my_movies(arr, x, mid + 1, end);
+}
+
+function insert_localy_movie_if_possible(arr,x,start){
+    if(arr[start]<x && x<arr[start+1])
+        arr.splice(start+1,0,x)
+}
+
+function UpdateMovieStorage(response,arr){
+    localStorage.setItem("MyMovies",JSON.stringify(arr))
+    root_module.afterwards(response)
+    console.log(localStorage.getItem("MyMovies"))
+}
+
+function delete_localy_movie(INDEX,response){
+    let arr=JSON.parse(localStorage.getItem("MyMovies"))
+    let json_parsed_arr=arr.slice(0,INDEX).concat(arr.slice(INDEX+1))
+    localStorage.setItem("MyMovies",JSON.stringify(json_parsed_arr))
+    root_module.afterwards(response)
+    console.log(localStorage.getItem("MyMovies"))
+}
+
+async function movie_add_delete(method_name,ID,semi_path){
+    let data={}
+    data['movieId']=ID
+    data['email']=localStorage.getItem("LoggedIn")
+    let url='http://localhost:8080/'+semi_path
+    root_module.activate_loader()
+    let response= await fetch(url,{
+        method:method_name,
+        mode:'cors',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+    })
+    return response
+}
+
+function deletemovie(ID,index){
+    return async function(e){
+        let response=await movie_add_delete('delete',ID,"MyBookmarks")
+        delete_localy_movie(index,response)
+     }
+}
+function addmovie(ID,index){
+    return async function(e){
+        let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
+        let response=await movie_add_delete('post',ID,"Welcome")
+        if(ID<movie_ids[0]){
+            arr.splice(0,0,x)
+            UpdateMovieStorage(response,movie_ids)
+            return
+
+        }
+        if(ID>movie_ids[movie_ids.length-1]){
+            arr.splice(movie_ids.length-1,0,x)
+            UpdateMovieStorage(response,movie_ids)
+            return
+        }
+        search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
+        UpdateMovieStorage(response,movie_ids)
     }
 }
 
 function LogOut(){
     localStorage.removeItem("LoggedIn")
+    localStorage.removeItem("MyMovies")
 }
 
-moreInfo=function (external_div,movie,bottom_div,a_bottom){
+moreInfo=function (external_div,movie,bottom_div,a_bottom,search){
     return function(e){
         let more_info_div=document.createElement("div")
         bottom_div.removeChild(a_bottom)
@@ -127,8 +225,16 @@ moreInfo=function (external_div,movie,bottom_div,a_bottom){
         }
         let button_elemenent=document.createElement("button")
         button_elemenent.classList.add("buttonS")
-        button_elemenent.appendChild(document.createTextNode("LIKE"))
-        button_elemenent.addEventListener("click",addmovie(movie.imdbID))
+        let parameters=["DISLIKE",deletemovie]
+        let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
+        console.log(movie_ids[0])
+        let index=0
+        if(search)
+            index=search_my_movies(movie_ids,movie.imdbID,0,movie_ids.length-1)
+        if(index===-1)
+            parameters=["LIKE",addmovie]
+        button_elemenent.appendChild(document.createTextNode(parameters[0]))
+        button_elemenent.addEventListener("click",parameters[1](movie.imdbID,index))
         let less_bottom_div=document.createElement("div")
         less_bottom_div.classList.add("bottom")
         less_bottom_div.appendChild(bottomHref(bottom_div,"less.."))
@@ -152,17 +258,7 @@ lessInfo=function(external_div,more_info_div,movie){
 }
 document.getElementById("bye").onclick=LogOut
 
-document.getElementById("inputSearch").addEventListener("keyup",async function (e){
-    let movie_at=document.getElementsByClassName("movies")[0]
-    removeAllChildNodes(movie_at)
-    let search_value=document.getElementById("inputSearch").value
-    let url="http://www.omdbapi.com/?apikey=1c07e2b7&&s="+search_value
-    if(search_value===undefined || search_value==="")
-        return -1;
-    let movies=await getMoviesJson(url)
-    console.log(movies)
-    if(movies===undefined)
-        return -1;
+async function present_movies(movies,movie_at,search){
     for(let movie of movies){
         let external_div=document.createElement("div")
         external_div.classList.add("external-div")
@@ -185,11 +281,11 @@ document.getElementById("inputSearch").addEventListener("keyup",async function (
         let bottom_div=document.createElement("div")
         bottom_div.classList.add("bottom")
         let a_bottom=bottomHref(bottom_div,"more..")
-        a_bottom.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom))
+        a_bottom.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom,search))
         external_div.appendChild(bottom_div)
         external_div.appendChild(document.createElement("br"))
         movie_at.appendChild(external_div)
     }
-    
+}
 
-})
+export default{removeAllChildNodes,getMoviesJson,present_movies,begin}

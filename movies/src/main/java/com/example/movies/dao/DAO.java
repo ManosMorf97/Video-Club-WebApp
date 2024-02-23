@@ -12,6 +12,8 @@ public interface DAO<T> {
 
     Optional<T> get(T t);
 
+    List<T> ListOf(T t);
+
     Optional<T> getUnique(T t);
 
     void update(T t);
