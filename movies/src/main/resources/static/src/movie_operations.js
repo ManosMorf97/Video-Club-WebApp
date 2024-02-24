@@ -129,6 +129,7 @@ function search_my_movies(arr, x, start, end, insert=false) {
     if (start > end){
         if(insert){
             insert_localy_movie_if_possible(arr,x,start)
+            return start
         }
         return -1;
     } 
@@ -158,18 +159,13 @@ function insert_localy_movie_if_possible(arr,x,start){
     }
 }
 
-function UpdateMovieStorage(response,arr){
-    localStorage.setItem("MyMovies",JSON.stringify(arr))
-    root_module.afterwards(response)
-    console.log(localStorage.getItem("MyMovies"))
-}
 
 function delete_localy_movie(INDEX,response,button_elemenent,movie){
     let arr=JSON.parse(localStorage.getItem("MyMovies"))
     let json_parsed_arr=arr.slice(0,INDEX).concat(arr.slice(INDEX+1))
     localStorage.setItem("MyMovies",JSON.stringify(json_parsed_arr))
     let parameters=["LIKE",addmovie,"buttonS"]
-    UpdateButton(button_elemenent,parameters,movie,INDEX)
+    UpdateButton(button_elemenent,parameters,movie,INDEX,true)
     root_module.afterwards(response)
     console.log(localStorage.getItem("MyMovies"))
 }
@@ -193,6 +189,7 @@ async function movie_add_delete(method_name,ID,semi_path){
 
 deletemovie=function(ID,index,button_elemenent,movie){
     return async function(e){
+        console.log("DELETER")
         let response=await movie_add_delete('delete',ID,"MyBookmarks")
         delete_localy_movie(index,response,button_elemenent,movie)
 
@@ -204,16 +201,17 @@ addmovie=function(ID,index,button_elemenent,movie){
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let response=await movie_add_delete('post',ID,"Welcome")
         if(ID<movie_ids[0]){
+            index=0
             movie_ids.splice(0,0,ID)
-            UpdateMovieStorage(response,movie_ids)
         }else if(ID>movie_ids[movie_ids.length-1]){
+            index=movie_ids.length-1
             movie_ids.splice(movie_ids.length-1,0,ID)
-            UpdateMovieStorage(response,movie_ids)
         }else
-            search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
+            index=search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
-        UpdateButton(button_elemenent,parameters,movie,index)
-        UpdateMovieStorage(response,movie_ids)
+        localStorage.setItem("MyMovies",JSON.stringify(movie_ids))
+        UpdateButton(button_elemenent,parameters,movie,index,true)
+        root_module.afterwards(response)
     }
 }
 
@@ -267,7 +265,11 @@ lessInfo=function(external_div,more_info_div,movie,search){
 }
 document.getElementById("bye").onclick=LogOut
 
-UpdateButton=function(button_elemenent,parameters,movie,index){
+UpdateButton=function(button_elemenent,parameters,movie,index,remove_listener=false){
+    if(remove_listener){
+        let new_button_elemenent=button_elemenent.cloneNode(true)
+        button_elemenent.parentNode.replaceChild(new_button_elemenent,button_elemenent)
+    }
     button_elemenent.className=""
     removeAllChildNodes(button_elemenent)
     button_elemenent.appendChild(document.createTextNode(parameters[0]))
