@@ -148,6 +148,12 @@ function search_my_movies(arr, x, start, end, insert=false) {
 function insert_localy_movie_if_possible(arr,x,start){
     if(arr[start]<x && x<arr[start+1])
         arr.splice(start+1,0,x)
+    else{//for good and bad
+        for (let i=0; i<=arr.length-2; i++){
+            if(arr[i]<x && x<arr[i+1])
+                arr.splice(i+1,0,x)
+        }
+    }
 }
 
 function UpdateMovieStorage(response,arr){
@@ -194,15 +200,11 @@ function addmovie(ID,index){
         if(ID<movie_ids[0]){
             arr.splice(0,0,x)
             UpdateMovieStorage(response,movie_ids)
-            return
-
-        }
-        if(ID>movie_ids[movie_ids.length-1]){
+        }else if(ID>movie_ids[movie_ids.length-1]){
             arr.splice(movie_ids.length-1,0,x)
             UpdateMovieStorage(response,movie_ids)
-            return
-        }
-        search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
+        }else
+            search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
         UpdateMovieStorage(response,movie_ids)
     }
 }
@@ -214,6 +216,7 @@ function LogOut(){
 
 moreInfo=function (external_div,movie,bottom_div,a_bottom,search){
     return function(e){
+        console.log(localStorage.getItem("MyMovies"))
         let more_info_div=document.createElement("div")
         bottom_div.removeChild(a_bottom)
         external_div.removeChild(bottom_div)
@@ -241,11 +244,11 @@ moreInfo=function (external_div,movie,bottom_div,a_bottom,search){
         more_info_div.appendChild(button_elemenent)
         more_info_div.appendChild(less_bottom_div)
         external_div.appendChild(more_info_div)
-        less_bottom_div.addEventListener("click",lessInfo(external_div,more_info_div,movie))
+        less_bottom_div.addEventListener("click",lessInfo(external_div,more_info_div,movie,search))
     }
 }
 
-lessInfo=function(external_div,more_info_div,movie){
+lessInfo=function(external_div,more_info_div,movie,search){
     return function(e){
         external_div.removeChild(more_info_div)
         let bottom_div=document.createElement("div")
@@ -253,7 +256,7 @@ lessInfo=function(external_div,more_info_div,movie){
         let a_bottom=bottomHref(bottom_div,"more..")
         bottom_div.appendChild(a_bottom)
         external_div.appendChild(bottom_div)
-        bottom_div.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom))
+        bottom_div.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom,search))
     }
 }
 document.getElementById("bye").onclick=LogOut
