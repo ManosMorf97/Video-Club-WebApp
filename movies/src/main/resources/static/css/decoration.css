@@ -72,13 +72,29 @@
         border-color: hsla(131, 94%, 48%, 0.844); 
     }
 
+    .redButtonS{
+        margin-top:2%;
+        margin-left:60%;
+        background-color: hsla(5, 94%, 51%, 0.844);
+        color:black;
+        height:5vh;
+        width: 13%;
+        font-size: 0.8rem;
+        z-index: 1;
+        border-radius:3%;
+        border-color: hsla(5, 94%, 51%,  0.844); 
+    }
+
     .bottom a{
-        margin-left: 37%;
-        color:rgba(255, 255, 255, 0.9);
+      margin-left: 37%;
+      color:rgba(255, 255, 255, 0.9);
     }
 
     .buttonS:hover{
-        background-color: hsla(131, 94%, 48%, 0.944)
+      background-color: hsla(131, 94%, 48%, 0.944)
+    }
+    .redButtonS:hover{
+      background-color: hsla(5, 94%, 51%, 0.944)
     }
 
     a:hover{

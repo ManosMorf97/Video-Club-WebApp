@@ -120,7 +120,7 @@ function bottomHref(bottom_div,info_message){
 
 let moreInfo=null
 let lessInfo=null
-
+let UpdateButton
 //https://www.geeksforgeeks.org/binary-search-in-javascript/
 function search_my_movies(arr, x, start, end, insert=false) {
     // Base Condition
@@ -162,10 +162,12 @@ function UpdateMovieStorage(response,arr){
     console.log(localStorage.getItem("MyMovies"))
 }
 
-function delete_localy_movie(INDEX,response){
+function delete_localy_movie(INDEX,response,button_elemenent,movie){
     let arr=JSON.parse(localStorage.getItem("MyMovies"))
     let json_parsed_arr=arr.slice(0,INDEX).concat(arr.slice(INDEX+1))
     localStorage.setItem("MyMovies",JSON.stringify(json_parsed_arr))
+    let parameters=["LIKE",addmovie,"buttonS"]
+    UpdateButton(button_elemenent,parameters,movie,INDEX)
     root_module.afterwards(response)
     console.log(localStorage.getItem("MyMovies"))
 }
@@ -187,24 +189,27 @@ async function movie_add_delete(method_name,ID,semi_path){
     return response
 }
 
-function deletemovie(ID,index){
+function deletemovie(ID,index,button_elemenent,movie){
     return async function(e){
         let response=await movie_add_delete('delete',ID,"MyBookmarks")
-        delete_localy_movie(index,response)
+        delete_localy_movie(index,response,button_elemenent,movie)
+
      }
 }
-function addmovie(ID,index){
+function addmovie(ID,index,button_elemenent,movie){
     return async function(e){
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let response=await movie_add_delete('post',ID,"Welcome")
         if(ID<movie_ids[0]){
-            arr.splice(0,0,x)
+            movie_ids.splice(0,0,ID)
             UpdateMovieStorage(response,movie_ids)
         }else if(ID>movie_ids[movie_ids.length-1]){
-            arr.splice(movie_ids.length-1,0,x)
+            movie_ids.splice(movie_ids.length-1,0,ID)
             UpdateMovieStorage(response,movie_ids)
         }else
             search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
+        let parameters=["DISLIKE",deletemovie,"redButtonS"]
+        UpdateButton(button_elemenent,parameters,movie,index)
         UpdateMovieStorage(response,movie_ids)
     }
 }
@@ -214,7 +219,7 @@ function LogOut(){
     localStorage.removeItem("MyMovies")
 }
 
-moreInfo=function (external_div,movie,bottom_div,a_bottom,search){
+moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
     return function(e){
         console.log(localStorage.getItem("MyMovies"))
         let more_info_div=document.createElement("div")
@@ -227,17 +232,15 @@ moreInfo=function (external_div,movie,bottom_div,a_bottom,search){
             more_info_div.appendChild(element)
         }
         let button_elemenent=document.createElement("button")
-        button_elemenent.classList.add("buttonS")
-        let parameters=["DISLIKE",deletemovie]
+        //button_elemenent.classList.add("buttonS")
+        let parameters=["DISLIKE",deletemovie,"redButtonS"]
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
-        console.log(movie_ids[0])
         let index=0
         if(search)
             index=search_my_movies(movie_ids,movie.imdbID,0,movie_ids.length-1)
         if(index===-1)
-            parameters=["LIKE",addmovie]
-        button_elemenent.appendChild(document.createTextNode(parameters[0]))
-        button_elemenent.addEventListener("click",parameters[1](movie.imdbID,index))
+            parameters=["LIKE",addmovie,"buttonS"]
+        UpdateButton(button_elemenent,parameters,movie,index)
         let less_bottom_div=document.createElement("div")
         less_bottom_div.classList.add("bottom")
         less_bottom_div.appendChild(bottomHref(bottom_div,"less.."))
@@ -260,6 +263,12 @@ lessInfo=function(external_div,more_info_div,movie,search){
     }
 }
 document.getElementById("bye").onclick=LogOut
+
+UpdateButton=function(button_elemenent,parameters,movie,index){
+    button_elemenent.appendChild(document.createTextNode(parameters[0]))
+    button_elemenent.addEventListener("click",parameters[1](movie.imdbID,index,button_elemenent,movie))
+    button_elemenent.classList.add(parameters[2])
+}
 
 async function present_movies(movies,movie_at,search){
     for(let movie of movies){
