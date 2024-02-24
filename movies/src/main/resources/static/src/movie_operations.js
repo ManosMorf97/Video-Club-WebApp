@@ -29,6 +29,8 @@ import root_module from "./root_module.js";
 
 
 */
+let addmovie
+let deletemovie
 
 function bring_my_movies(){
     if(localStorage.getItem("MyMovies")!=null&&localStorage.getItem("MyMovies")!=undefined)
@@ -189,14 +191,15 @@ async function movie_add_delete(method_name,ID,semi_path){
     return response
 }
 
-function deletemovie(ID,index,button_elemenent,movie){
+deletemovie=function(ID,index,button_elemenent,movie){
     return async function(e){
         let response=await movie_add_delete('delete',ID,"MyBookmarks")
         delete_localy_movie(index,response,button_elemenent,movie)
 
      }
 }
-function addmovie(ID,index,button_elemenent,movie){
+
+addmovie=function(ID,index,button_elemenent,movie){
     return async function(e){
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let response=await movie_add_delete('post',ID,"Welcome")
@@ -208,7 +211,7 @@ function addmovie(ID,index,button_elemenent,movie){
             UpdateMovieStorage(response,movie_ids)
         }else
             search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
-        let parameters=["DISLIKE",deletemovie,"redButtonS"]
+        let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         UpdateButton(button_elemenent,parameters,movie,index)
         UpdateMovieStorage(response,movie_ids)
     }
@@ -233,7 +236,7 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
         }
         let button_elemenent=document.createElement("button")
         //button_elemenent.classList.add("buttonS")
-        let parameters=["DISLIKE",deletemovie,"redButtonS"]
+        let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let index=0
         if(search)
@@ -265,6 +268,8 @@ lessInfo=function(external_div,more_info_div,movie,search){
 document.getElementById("bye").onclick=LogOut
 
 UpdateButton=function(button_elemenent,parameters,movie,index){
+    button_elemenent.className=""
+    removeAllChildNodes(button_elemenent)
     button_elemenent.appendChild(document.createTextNode(parameters[0]))
     button_elemenent.addEventListener("click",parameters[1](movie.imdbID,index,button_elemenent,movie))
     button_elemenent.classList.add(parameters[2])
