@@ -136,10 +136,18 @@ function delete_localy_movie(INDEX,response,div_button_element,movie){
     let arr=JSON.parse(localStorage.getItem("MyMovies"))
     let json_parsed_arr=arr.slice(0,INDEX).concat(arr.slice(INDEX+1))
     localStorage.setItem("MyMovies",JSON.stringify(json_parsed_arr))
-    let parameters=["LIKE",addmovie,"buttonS"]
-    CreateButton(div_button_element,parameters,movie,INDEX)
-    root_module.afterwards(response)
-    console.log(localStorage.getItem("MyMovies"))
+    if (refactor){
+        BookmarkMovies=BookmarkMovies.slice(0,INDEX).concat(BookmarkMovies.slice(INDEX+1))
+        removeAllChildNodes(BookmarkMovie_at)
+        present_movies(BookmarkMovies,BookmarkMovie_at,false)
+        root_module.afterwards()
+        console.log(localStorage.getItem("MyMovies"))
+    }else{
+        let parameters=["LIKE",addmovie,"buttonS"]
+        CreateButton(div_button_element,parameters,movie,INDEX)
+        root_module.afterwards(response)
+        console.log(localStorage.getItem("MyMovies"))
+    }
 }
 
 async function movie_add_delete(method_name,ID,semi_path){
@@ -216,9 +224,8 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let index=0
-        if(search)
-            index=search_my_movies(movie_ids,movie.imdbID,0,movie_ids.length-1)
-        if(index===-1)
+        index=search_my_movies(movie_ids,movie.imdbID,0,movie_ids.length-1)
+        if(index===-1&&search)
             parameters=["LIKE",addmovie,"buttonS"]
         CreateButton(div_button_element,parameters,movie,index)
         let less_bottom_div=document.createElement("div")
@@ -257,6 +264,15 @@ CreateButton=function(div_button_element,parameters,movie,index){
 }
 
 async function present_movies(movies,movie_at,search){
+    refactor=!search
+    if(refactor){
+        BookmarkMovies=movies
+        BookmarkMovie_at=movie_at
+    }
+    else{
+        BookmarkMovies=null
+        BookmarkMovie_at=null
+    }
     for(let movie of movies){
         let external_div=document.createElement("div")
         external_div.classList.add("external-div")
@@ -287,4 +303,6 @@ async function present_movies(movies,movie_at,search){
 }
 
 var BookmarkMovies
+var BookmarkMovie_at
+var refactor
 export default{removeAllChildNodes,getMoviesJson,present_movies,getMovies,begin}
