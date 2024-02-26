@@ -204,7 +204,9 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
             element.appendChild(document.createTextNode(movie[attribute]))
             more_info_div.appendChild(element)
         }
-        let bookmark_added_attributes=["Director","Writer","Actors","Plot","Genre","Runtime"]
+        let bookmark_added_attributes=[]
+        if(!search)
+            bookmark_added_attributes=["Director","Writer","Actors","Plot","Genre","Runtime"]
         for(let attribute of bookmark_added_attributes){
             let element=document.createElement("h3")
             element.appendChild(document.createTextNode(attribute+": "+movie[attribute]))
