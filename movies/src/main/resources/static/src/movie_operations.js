@@ -122,7 +122,7 @@ function bottomHref(bottom_div,info_message){
 
 let moreInfo=null
 let lessInfo=null
-let UpdateButton
+let CreateButton
 //https://www.geeksforgeeks.org/binary-search-in-javascript/
 function search_my_movies(arr, x, start, end, insert=false) {
     // Base Condition
@@ -160,12 +160,12 @@ function insert_localy_movie_if_possible(arr,x,start){
 }
 
 
-function delete_localy_movie(INDEX,response,button_elemenent,movie){
+function delete_localy_movie(INDEX,response,div_button_element,movie){
     let arr=JSON.parse(localStorage.getItem("MyMovies"))
     let json_parsed_arr=arr.slice(0,INDEX).concat(arr.slice(INDEX+1))
     localStorage.setItem("MyMovies",JSON.stringify(json_parsed_arr))
     let parameters=["LIKE",addmovie,"buttonS"]
-    UpdateButton(button_elemenent,parameters,movie,INDEX,true)
+    CreateButton(div_button_element,parameters,movie,INDEX)
     root_module.afterwards(response)
     console.log(localStorage.getItem("MyMovies"))
 }
@@ -187,16 +187,16 @@ async function movie_add_delete(method_name,ID,semi_path){
     return response
 }
 
-deletemovie=function(ID,index,button_elemenent,movie){
+deletemovie=function(ID,index,div_button_element,movie){
     return async function(e){
         console.log("DELETER")
         let response=await movie_add_delete('delete',ID,"MyBookmarks")
-        delete_localy_movie(index,response,button_elemenent,movie)
+        delete_localy_movie(index,response,div_button_element,movie)
 
      }
 }
 
-addmovie=function(ID,index,button_elemenent,movie){
+addmovie=function(ID,index,div_button_element,movie){
     return async function(e){
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let response=await movie_add_delete('post',ID,"Welcome")
@@ -205,12 +205,12 @@ addmovie=function(ID,index,button_elemenent,movie){
             movie_ids.splice(0,0,ID)
         }else if(ID>movie_ids[movie_ids.length-1]){
             index=movie_ids.length-1
-            movie_ids.splice(movie_ids.length-1,0,ID)
+            movie_ids.splice(movie_ids.length,0,ID)
         }else
             index=search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         localStorage.setItem("MyMovies",JSON.stringify(movie_ids))
-        UpdateButton(button_elemenent,parameters,movie,index,true)
+        CreateButton(div_button_element,parameters,movie,index)
         root_module.afterwards(response)
     }
 }
@@ -232,8 +232,7 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
             element.appendChild(document.createTextNode(movie[attribute]))
             more_info_div.appendChild(element)
         }
-        let button_elemenent=document.createElement("button")
-        //button_elemenent.classList.add("buttonS")
+        let div_button_element=document.createElement("div")
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let index=0
@@ -241,13 +240,14 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
             index=search_my_movies(movie_ids,movie.imdbID,0,movie_ids.length-1)
         if(index===-1)
             parameters=["LIKE",addmovie,"buttonS"]
-        UpdateButton(button_elemenent,parameters,movie,index)
+        CreateButton(div_button_element,parameters,movie,index)
         let less_bottom_div=document.createElement("div")
         less_bottom_div.classList.add("bottom")
         less_bottom_div.appendChild(bottomHref(bottom_div,"less.."))
-        more_info_div.appendChild(button_elemenent)
+        more_info_div.appendChild(div_button_element)
         more_info_div.appendChild(less_bottom_div)
         external_div.appendChild(more_info_div)
+        external_div.appendChild(document.createElement("br"))
         less_bottom_div.addEventListener("click",lessInfo(external_div,more_info_div,movie,search))
     }
 }
@@ -260,21 +260,20 @@ lessInfo=function(external_div,more_info_div,movie,search){
         let a_bottom=bottomHref(bottom_div,"more..")
         bottom_div.appendChild(a_bottom)
         external_div.appendChild(bottom_div)
+        external_div.appendChild(document.createElement("br"))
         bottom_div.addEventListener("click",moreInfo(external_div,movie,bottom_div,a_bottom,search))
     }
 }
 document.getElementById("bye").onclick=LogOut
 
-UpdateButton=function(button_elemenent,parameters,movie,index,remove_listener=false){
-    if(remove_listener){
-        let new_button_elemenent=button_elemenent.cloneNode(true)
-        button_elemenent.parentNode.replaceChild(new_button_elemenent,button_elemenent)
-    }
-    button_elemenent.className=""
-    removeAllChildNodes(button_elemenent)
-    button_elemenent.appendChild(document.createTextNode(parameters[0]))
-    button_elemenent.addEventListener("click",parameters[1](movie.imdbID,index,button_elemenent,movie))
-    button_elemenent.classList.add(parameters[2])
+CreateButton=function(div_button_element,parameters,movie,index){
+    removeAllChildNodes(div_button_element)
+    let button_element=document.createElement("button")
+    button_element.appendChild(document.createTextNode(parameters[0]))
+    button_element.addEventListener("click",parameters[1](movie.imdbID,index,div_button_element,movie))
+    button_element.classList.add(parameters[2])
+    div_button_element.appendChild(button_element)
+    div_button_element.appendChild(document.createElement("br"))
 }
 
 async function present_movies(movies,movie_at,search){

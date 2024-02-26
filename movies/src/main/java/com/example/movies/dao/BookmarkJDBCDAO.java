@@ -84,5 +84,6 @@ public class BookmarkJDBCDAO implements DAO<Bookmark>{
     public void delete(Bookmark bm) {
             String sql = "delete from Bookmarks where movieId=? and email=? ";
             jdbcTemplate.update(sql,bm.getMovieId(),bm.getEmail());
+            log.info("Successfully deleted movie with ID: "+ bm.getMovieId());
     }
 }
