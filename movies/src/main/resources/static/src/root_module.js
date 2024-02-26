@@ -10,7 +10,8 @@ function afterwards(response){
     let body=document.getElementsByTagName("body")[0].style;
     body.opacity="1";
     body["pointer-events"]="auto";
-    return response.ok
+    if (response!=null)
+        return response.ok
 }
 
 export default{activate_loader,afterwards}

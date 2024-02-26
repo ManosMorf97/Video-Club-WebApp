@@ -20,7 +20,7 @@ public class IndexController {
     public String Welcome(){
         return "Welcome";
     }
-    @GetMapping("/BookMarks")
+    @GetMapping("/MyBookmarks")
     public String BookMarks(){
         return "BookMarks";
     }

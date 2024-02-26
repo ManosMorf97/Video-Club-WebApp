@@ -2,15 +2,16 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" href="css/decoration.css">
-        <link rel="stylesheet" href="css/main-decoration.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Welcome</title>
+        <link rel="stylesheet" type="text/css" href="css/decoration.css" />
+        <link rel="stylesheet" type="text/css" href="css/main-decoration.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <title>MyBookMarks</title>
     </head>
     <body>
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         <div class="options">
             <div class="Welcomepage BookMark-Component">
-                <a href="" style="text-decoration:none;">
+                <a href="http://localhost:8080/Welcome" style="text-decoration:none;">
                     &#160 <span class="welcomepage">&#160</span>
                 </a>
             </div>
@@ -20,12 +21,12 @@
                 </a>
             </div>
             <div class="LogOut BookMark-Component">
-                <a href="" style="text-decoration:none;">
+                <a href="http://localhost:8080/" id="bye" style="text-decoration:none;">
                     &#160 <span class="logout">&#160</span>
                 </a>
             </div>
         </div>
-        <h1 style="float:left; position: absolute;">Movies you like</h1>
+        <h1 style="float:left; position: absolute;" id="message_to_user"></h1>
         <div class="movies">
             <div class="external-div">
                 <h1>Batman Begins</h1>
@@ -79,3 +80,4 @@
         </div>
     </body>
 </html>
+<script src=src/bookmarks.js type="module"></script>

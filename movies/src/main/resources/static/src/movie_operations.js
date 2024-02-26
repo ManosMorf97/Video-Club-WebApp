@@ -1,34 +1,5 @@
 import root_module from "./root_module.js";
 
-/*
-<div class="external-div">
-                <h1>Batman Begins</h1>
-                <h2>2005</h2>
-                <img src="img1.jpg" alt="none" width="200" height="200" />
-                <br>
-                <div class="bottom">
-                    <a href="" id="more" >more..</a>
-                </div>
-                <br>
-            </div>
-            <div class="external-div">
-                <h1>Batman Begins</h1>
-                <h2>2005</h2>
-                <img src="img1.jpg" alt="none" width="200" height="200" />
-                <br>
-                <h3>Movie</h3>
-                <h3>tt0372784</h3>
-                <button class="buttonS">LIKE</button>
-                <div class="bottom">
-                    <a href="" >less</a>
-                </div>
-                <br>
-            </div>
-
-
-
-
-*/
 let addmovie
 let deletemovie
 
@@ -54,7 +25,7 @@ function bring_my_movies(){
     })
 }
 
-function begin(){
+function begin(message="Welcome "+localStorage.getItem("LoggedIn")){
 
     let spanners=document.getElementsByTagName("span");
     if(localStorage.getItem("LoggedIn")===null||localStorage.getItem("LoggedIn")===undefined){
@@ -62,8 +33,8 @@ function begin(){
         body.opacity="0.3";
         body["pointer-events"]="none";
     }else{
-        document.getElementById("welcome_user").appendChild(
-            document.createTextNode("Welcome "+localStorage.getItem("LoggedIn")))
+        document.getElementById("message_to_user").appendChild(
+            document.createTextNode(message))
         bring_my_movies()
     }
 
@@ -79,6 +50,7 @@ function begin(){
         spanners[i].addEventListener("mouseover",changeindexedcolor(i));
     }
 }
+
 
 
 
@@ -232,6 +204,12 @@ moreInfo=function(external_div,movie,bottom_div,a_bottom,search){
             element.appendChild(document.createTextNode(movie[attribute]))
             more_info_div.appendChild(element)
         }
+        let bookmark_added_attributes=["Director","Writer","Actors","Plot","Genre","Runtime"]
+        for(let attribute of bookmark_added_attributes){
+            let element=document.createElement("h3")
+            element.appendChild(document.createTextNode(attribute+": "+movie[attribute]))
+            more_info_div.appendChild(element)
+        }
         let div_button_element=document.createElement("div")
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
@@ -306,4 +284,5 @@ async function present_movies(movies,movie_at,search){
     }
 }
 
-export default{removeAllChildNodes,getMoviesJson,present_movies,begin}
+var BookmarkMovies
+export default{removeAllChildNodes,getMoviesJson,present_movies,getMovies,begin}
