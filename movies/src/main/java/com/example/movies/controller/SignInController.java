@@ -30,7 +30,6 @@ public class SignInController {
         if (logged_in==null){
             return new ResponseEntity<>("Wrong username and/or password", HttpStatus.NOT_FOUND);
         }else{
-
             return new ResponseEntity<>("Welcome "+user.getEmail(), HttpStatus.OK);
         }
 
