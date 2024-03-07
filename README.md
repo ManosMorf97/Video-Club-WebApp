@@ -35,7 +35,11 @@ The technologies were used are: &nbsp;
 ### Frontend
 1) When the user creates account the password becomes hashed.hashed password and username are sent to backend.
 2) When the user makes login the password becomes hashed.hashed password and username are sent to backend.&nbsp;
-<br>The user data are stored on localstorage in order the user can access the WebApp.
+<br> &nbsp; &nbsp; The username is stored on localstorage in order the user can access the WebApp.
+3) When the user opens a page from app the data from his bookmarks are fetched from backend and stored on localstorage.
+4) When the user search for a movie the frontend fetches movie data(title,year,id) from omdbAPI.
+5) When the user clicks like/dislike or like the movie_id stored/removed from local DB.
+6) When the user visits his bookmarks, each movie_id from the localstorage is sent on omdbAPI to get more details about this movie (description, genres, plot, etc).
    
 
 
