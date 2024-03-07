@@ -8,7 +8,7 @@ On the main page(Welcome page) the users can search for a movie and see some det
 The above movies are fetched from the omdb api via a key. &nbsp;
 When the user clicks on like button the movies are stored on a local DB. &nbsp;
 When the users clicks on MyBookmarks page they can see more details about the movies they have stored (directors, genres, plot, e.t.c). &nbsp;
-More info can be seen (here)[Web Programming - Assignment 2 - 2020.pdf]
+More info can be seen [here](Web Programming - Assignment 2 - 2020.pdf).
 
 ## Tools
 
