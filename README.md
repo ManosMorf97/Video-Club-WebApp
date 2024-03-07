@@ -35,7 +35,7 @@ The technologies were used are: &nbsp;
 ### Frontend
 1) When the user creates account the password becomes hashed.hashed password and username are sent to backend.
 2) When the user makes login the password becomes hashed.hashed password and username are sent to backend.&nbsp;
-<br><br>The user data are stored on localstorage in order the user can access the WebApp.
+<br>The user data are stored on localstorage in order the user can access the WebApp.
    
 
 
