@@ -98,19 +98,10 @@ let CreateButton
 //https://www.geeksforgeeks.org/binary-search-in-javascript/
 function search_my_movies(arr, x, start, end, insert=false) {
     // Base Condition
-    if (start > end){
-        if(insert){
-            insert_localy_movie_if_possible(arr,x,start)
-            return start
-        }
+    if (start > end)
         return -1;
-    } 
  
     let mid = Math.floor((start + end) / 2);
-
-    if(insert){
-        insert_localy_movie_if_possible(arr,x,start,end)
-    }
 
     if (arr[mid] === x) return mid;
     
@@ -120,13 +111,11 @@ function search_my_movies(arr, x, start, end, insert=false) {
         return search_my_movies(arr, x, mid + 1, end);
 }
 
-function insert_localy_movie_if_possible(arr,x,start){
-    if(arr[start]<x && x<arr[start+1])
-        arr.splice(start+1,0,x)
-    else{//for good and bad
-        for (let i=0; i<=arr.length-2; i++){
-            if(arr[i]<x && x<arr[i+1])
-                arr.splice(i+1,0,x)
+function insert_localy_movie(arr,x){
+    for (let i=0; i<=arr.length-2; i++){
+        if(arr[i]<x && x<arr[i+1]){
+            arr.splice(i+1,0,x)
+            return i+1
         }
     }
 }
@@ -176,18 +165,22 @@ deletemovie=function(ID,index,div_button_element,movie){
      }
 }
 
-addmovie=function(ID,index,div_button_element,movie){
+addmovie=function(ID,index,div_button_element,movie){//index as parameter unecesary,so I use it as local variable
     return async function(e){
         let movie_ids=JSON.parse(localStorage.getItem("MyMovies"))
         let response=await movie_add_delete('post',ID,"Welcome")
-        if(ID<movie_ids[0]){
+        if(movie_ids.length==0){
+            movie_ids.push(ID)
             index=0
+        }
+        else if(ID<movie_ids[0]){
             movie_ids.splice(0,0,ID)
+            index=0
         }else if(ID>movie_ids[movie_ids.length-1]){
-            index=movie_ids.length-1
             movie_ids.splice(movie_ids.length,0,ID)
+            index=movie_ids.length-1
         }else
-            index=search_my_movies(movie_ids,ID,0,movie_ids.length-1,true)
+            index=insert_localy_movie(movie_ids,ID)
         let parameters=["DISLIKE",deletemovie,"RedButtonS"]
         localStorage.setItem("MyMovies",JSON.stringify(movie_ids))
         CreateButton(div_button_element,parameters,movie,index)
