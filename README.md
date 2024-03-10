@@ -23,7 +23,7 @@ The technologies were used are: &nbsp;
 ## app runing
 
 1) We run the file MoviesApplication.java .&nbsp;
-2) Afterwards we open our browser on localhost8080 and connect to our account,or create if we do not have one.&nbsp;
+2) Afterwards we open our browser on localhost:8080 and connect to our account,or create if we do not have one.&nbsp;
 3) Then we type on our browser localhost:8080/Welcome. I could not accomplish redirection after log in (for now).&nbsp;
 4) Then we can search movies and store them to our bookmarks
 
