@@ -1,4 +1,4 @@
-# VideoClub_WebApp
+# Video-Club-WebApp
 
 ## Explanation
 
