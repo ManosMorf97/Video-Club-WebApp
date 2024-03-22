@@ -1,9 +1,5 @@
 # Video-Club-WebApp
 
-## Demo
-
-You can see the demo [here](https://drive.google.com/file/d/1brouFuvehniGwH3NErdiGjFw9Mhl4wCZ/view?usp=sharing)
-
 ## Explanation
 
 This is a task given from Athens University of Economics and Business by proffesor Georgios Stergiopoulos that I had implemented much better than before. &nbsp;
@@ -28,8 +24,7 @@ The technologies were used are: &nbsp;
 
 1) We run the file MoviesApplication.java .&nbsp;
 2) Afterwards we open our browser on localhost:8080 and connect to our account,or create if we do not have one.&nbsp;
-3) Then we type on our browser localhost:8080/Welcome. I could not accomplish redirection after log in (for now).&nbsp;
-4) Then we can search movies and store them to our bookmarks
+3) Then we can search movies and store them to our bookmarks
 
 ## How the app works
 ### Backend
