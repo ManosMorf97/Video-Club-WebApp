@@ -23,12 +23,16 @@ let post_data=function(url,md5,connection_attempt,message){
         let attempted=root_module.afterwards(response);
         if(connection_attempt&&attempted){
             localStorage.setItem("LoggedIn",document.getElementById("email").value);
+            alert(message["success"])
+            window.location.href="http://localhost:8080/Welcome"
         }
-        if(attempted){
+        else if(attempted){
             console.log(message["success"])
+            alert(message["success"])
         }
         else{
             console.log(message["error"]);
+            alert(message["error"])
         }
         successfull=true;})
     .catch((error)=>{ root_module.afterwards(error);
