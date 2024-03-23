@@ -8,7 +8,7 @@ document.getElementById("SignUp").addEventListener("submit",(e)=>{
     
     let error;
     if(document.getElementById("password").value!=document.getElementById("repeated_password").value)
-        error="Passwords do not match";
+        alert("Passwords do not match");
     else{
         let message={}
         message["success"]="The user has created"
